@@ -14,6 +14,8 @@
 		1EF7FFDD2A3DF7FD00EA792D /* BarcodeScannerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EF7FFDC2A3DF7FD00EA792D /* BarcodeScannerTests.swift */; };
 		1EF7FFE72A3DF7FD00EA792D /* BarcodeScannerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EF7FFE62A3DF7FD00EA792D /* BarcodeScannerUITests.swift */; };
 		1EF7FFE92A3DF7FD00EA792D /* BarcodeScannerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EF7FFE82A3DF7FD00EA792D /* BarcodeScannerUITestsLaunchTests.swift */; };
+		1EF7FFF62A3DF93000EA792D /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EF7FFF52A3DF93000EA792D /* AppViewModel.swift */; };
+		1EF7FFF82A3E026800EA792D /* DataScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EF7FFF72A3E026800EA792D /* DataScannerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +46,8 @@
 		1EF7FFE22A3DF7FD00EA792D /* BarcodeScannerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BarcodeScannerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EF7FFE62A3DF7FD00EA792D /* BarcodeScannerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScannerUITests.swift; sourceTree = "<group>"; };
 		1EF7FFE82A3DF7FD00EA792D /* BarcodeScannerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScannerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		1EF7FFF52A3DF93000EA792D /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
+		1EF7FFF72A3E026800EA792D /* DataScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataScannerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +102,8 @@
 				1EF7FFCD2A3DF7FC00EA792D /* ContentView.swift */,
 				1EF7FFCF2A3DF7FD00EA792D /* Assets.xcassets */,
 				1EF7FFD12A3DF7FD00EA792D /* Preview Content */,
+				1EF7FFF52A3DF93000EA792D /* AppViewModel.swift */,
+				1EF7FFF72A3E026800EA792D /* DataScannerView.swift */,
 			);
 			path = BarcodeScanner;
 			sourceTree = "<group>";
@@ -259,6 +265,8 @@
 			files = (
 				1EF7FFCE2A3DF7FC00EA792D /* ContentView.swift in Sources */,
 				1EF7FFCC2A3DF7FC00EA792D /* BarcodeScannerApp.swift in Sources */,
+				1EF7FFF62A3DF93000EA792D /* AppViewModel.swift in Sources */,
+				1EF7FFF82A3E026800EA792D /* DataScannerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,6 +428,7 @@
 				DEVELOPMENT_TEAM = 3BNQYYVK2U;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "The app needs camera access to scaner text and barcode !";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -449,6 +458,7 @@
 				DEVELOPMENT_TEAM = 3BNQYYVK2U;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "The app needs camera access to scaner text and barcode !";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
