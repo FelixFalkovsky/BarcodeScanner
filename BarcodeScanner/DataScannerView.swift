@@ -33,25 +33,42 @@ struct DataScannerView: UIViewControllerRepresentable {
     }
     
     func makeCoordinator() -> Coordinator {
-        Coordinator(recognisendItems: $recognizedItems)
+        Coordinator(recognizedItems: $recognizedItems)
     }
+    
+    static func dismantleUIViewController(_ uiViewController: DataScannerViewController, coordinator: Coordinator) {
+        uiViewController.stopScanning()
+    }
+    
+    // MARK: Coordinaotr
     
     class Coordinator: NSObject, DataScannerViewControllerDelegate {
-        @Binding var recognisendItems: [RecognizedItem]
+        @Binding var recognizedItems: [RecognizedItem]
         
-        init(recognisendItems: Binding<[RecognizedItem]>) {
-            self._recognisendItems = recognisendItems
+        init(recognizedItems: Binding<[RecognizedItem]>) {
+            self._recognizedItems = recognizedItems
         }
-    }
-    
-    func dataScanner(_ dataScanner: DataScannerViewController, didTapOn item: RecognizedItem) {
-        print("didTapOn \(item)")
         
-    }
-    
-    func dataScanner(_ dataScanner: DataScannerViewController, didAdd addedItems: [RecognizedItem], allItems: [RecognizedItem]) {
-        UINotificationFeedbackGenerator().notificationOccurred(.success)
-        recognizedItems.append(contentsOf: addedItems)
-        print("addedItems \(addedItems)")
+        func dataScanner(_ dataScanner: DataScannerViewController, didTapOn item: RecognizedItem) {
+            print("didTapOn \(item)")
+            
+        }
+        
+        func dataScanner(_ dataScanner: DataScannerViewController, didAdd addedItems: [RecognizedItem], allItems: [RecognizedItem]) {
+            UINotificationFeedbackGenerator().notificationOccurred(.success)
+            recognizedItems.append(contentsOf: addedItems)
+            print("addedItems \(addedItems)")
+        }
+        
+        func dataScanner(_ dataScanner: DataScannerViewController, didRemove removedItems: [RecognizedItem], allItems: [RecognizedItem]) {
+            self.recognizedItems = recognizedItems.filter { item in
+                removedItems.contains(where: { $0.id == item.id })
+            }
+            print("didRemovedItems \(removedItems)")
+        }
+        
+        func dataScanner(_ dataScanner: DataScannerViewController, becameUnavailableWithError error: DataScannerViewController.ScanningUnavailable) {
+            print("became unavailable with error \(error.localizedDescription)")
+        }
     }
 }
