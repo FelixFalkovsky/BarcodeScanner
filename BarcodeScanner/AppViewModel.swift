@@ -18,6 +18,10 @@ enum DataScannerAccessStatusType {
     case scannerNotAvailable
 }
 
+enum ScanType {
+    case text, barcode
+}
+
 @MainActor
 final class AppViewModel: ObservableObject {
 
