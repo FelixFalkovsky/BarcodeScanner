@@ -29,6 +29,7 @@ struct DataScannerView: UIViewControllerRepresentable {
     
     func updateUIViewController(_ uiViewController: DataScannerViewController, context: Context) {
         uiViewController.delegate = context.coordinator
+        
         try? uiViewController.startScanning()
     }
     

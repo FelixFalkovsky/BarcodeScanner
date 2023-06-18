@@ -18,7 +18,7 @@ enum DataScannerAccessStatusType {
     case scannerNotAvailable
 }
 
-enum ScanType {
+enum ScanType: String {
     case barcode, text
 }
 
@@ -33,6 +33,24 @@ final class AppViewModel: ObservableObject {
 
     var recognizedDataType: DataScannerViewController.RecognizedDataType {
         scanType == .barcode ? .barcode() : .text(textContentType: textContentType)
+    }
+    
+    var dataScannerViewID: Int {
+        var hasher = Hasher()
+        hasher.combine(scanType)
+        hasher.combine(recognizesMultipleItems)
+        if let textContentType {
+            hasher.combine(textContentType)
+        }
+        return hasher.finalize()
+    }
+    
+    var headerText: String {
+        if recognizedItems.isEmpty {
+            return "Scaning .. \(scanType.rawValue)"
+        } else {
+            return "Recognized \(recognizedItems.count) item(s)"
+        }
     }
     
     private var isScannerAvailable: Bool {
