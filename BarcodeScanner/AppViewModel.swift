@@ -19,15 +19,22 @@ enum DataScannerAccessStatusType {
 }
 
 enum ScanType {
-    case text, barcode
+    case barcode, text
 }
 
 @MainActor
 final class AppViewModel: ObservableObject {
 
     @Published var dataScannerAcessedStatus: DataScannerAccessStatusType = .notDetermined
+    @Published var recognizedItems: [RecognizedItem] = []
+    @Published var scanType: ScanType = .barcode
+    @Published var textContentType: DataScannerViewController.TextContentType?
+    @Published var recognizesMultipleItems = true
 
-
+    var recognizedDataType: DataScannerViewController.RecognizedDataType {
+        scanType == .barcode ? .barcode() : .text(textContentType: textContentType)
+    }
+    
     private var isScannerAvailable: Bool {
         DataScannerViewController.isAvailable && DataScannerViewController.isSupported
     }
