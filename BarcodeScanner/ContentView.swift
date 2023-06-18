@@ -37,35 +37,40 @@ struct ContentView: View {
             Text("Request camera access")
         }
     }
+}
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
+}
+
+extension ContentView {
     
     private var mainView: some View {
-        VStack {
-            DataScannerView(
-                recognizedItems: $vm.recognizedItems,
-                recognizedDataType: vm.recognizedDataType,
-                recognizesMultipleItems: vm.recognizesMultipleItems
-            )
-            .background { Color.gray.opacity(0.3) }
-            .ignoresSafeArea()
-            .id(vm.dataScannerViewID)
-            
-            VStack {
-                headerView
-                ScrollView {
-                    LazyVStack(alignment: .leading, content: {
-                        ForEach(vm.recognizedItems) { item in
-                            switch item {
-                            case .barcode(let barcode):
-                                Text(barcode.payloadStringValue ?? "Unknown barcode")
-                            case .text(let text):
-                                Text(text.transcript)
-                            @unknown default:
-                                Text("Unknown data")
-                            }
-                        }
-                    })
-                }
-            }
+        DataScannerView(
+            recognizedItems: $vm.recognizedItems,
+            recognizedDataType: vm.recognizedDataType,
+            recognizesMultipleItems: vm.recognizesMultipleItems
+        )
+        .background { Color.gray.opacity(0.3) }
+        .ignoresSafeArea()
+        .id(vm.dataScannerViewID)
+        .sheet(isPresented: .constant(true)) {
+            containerView
+                .padding()
+                .background(.ultraThinMaterial)
+                .presentationDetents([.medium, .fraction(0.25)])
+                .presentationDragIndicator(.visible)
+                .interactiveDismissDisabled()
+                .clearModalBackground()
+//                .onAppear {
+//                    guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+//                          let controller = windowScene.windows.first?.rootViewController?.presentedViewController else {
+//                        return
+//                    }
+//                    controller.view.backgroundColor = .clear
+//                }
         }
         .onChange(of: vm.scanType) { _ in
             vm.recognizedItems = []
@@ -75,6 +80,11 @@ struct ContentView: View {
         }
         .onChange(of: vm.recognizesMultipleItems) { _ in
             vm.recognizedItems = []
+        }
+        .onAppear {
+            Task {
+                await vm.scannerAccessStatusService()
+            }
         }
     }
     
@@ -108,10 +118,24 @@ struct ContentView: View {
         }
         .padding()
     }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+    
+    private var containerView: some View {
+        VStack {
+            headerView
+            ScrollView {
+                LazyVStack(alignment: .leading, content: {
+                    ForEach(vm.recognizedItems) { item in
+                        switch item {
+                        case .barcode(let barcode):
+                            Text(barcode.payloadStringValue ?? "Unknown barcode")
+                        case .text(let text):
+                            Text(text.transcript)
+                        @unknown default:
+                            Text("Unknown data")
+                        }
+                    }
+                })
+            }
+        }
     }
 }
