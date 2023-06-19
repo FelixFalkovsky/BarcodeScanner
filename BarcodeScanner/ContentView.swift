@@ -64,13 +64,6 @@ extension ContentView {
                 .presentationDragIndicator(.visible)
                 .interactiveDismissDisabled()
                 .clearModalBackground()
-//                .onAppear {
-//                    guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-//                          let controller = windowScene.windows.first?.rootViewController?.presentedViewController else {
-//                        return
-//                    }
-//                    controller.view.backgroundColor = .clear
-//                }
         }
         .onChange(of: vm.scanType) { _ in
             vm.recognizedItems = []

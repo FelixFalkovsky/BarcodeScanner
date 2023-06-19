@@ -15,7 +15,7 @@ struct BarcodeScannerApp: App {
             ContentView()
                 .environmentObject(vm)
                 .task {
-                    await vm.requestDataScannerAccessStatus() 
+                    await vm.scannerAccessStatusService()
                 }
         }
     }
