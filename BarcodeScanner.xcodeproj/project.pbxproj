@@ -98,6 +98,15 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
+		1EB9CFDA2A4214FE0077B0D9 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				1EF7FFCB2A3DF7FC00EA792D /* BarcodeScannerApp.swift */,
+				1EF7FFCD2A3DF7FC00EA792D /* ContentView.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
 		1EF7FFBF2A3DF7FC00EA792D = {
 			isa = PBXGroup;
 			children = (
@@ -121,10 +130,9 @@
 		1EF7FFCA2A3DF7FC00EA792D /* BarcodeScanner */ = {
 			isa = PBXGroup;
 			children = (
+				1EB9CFDA2A4214FE0077B0D9 /* App */,
 				1EB9CEFB2A3F640E0077B0D9 /* Services */,
 				1EB9CEF82A3F63A30077B0D9 /* Helpers */,
-				1EF7FFCB2A3DF7FC00EA792D /* BarcodeScannerApp.swift */,
-				1EF7FFCD2A3DF7FC00EA792D /* ContentView.swift */,
 				1EF7FFCF2A3DF7FD00EA792D /* Assets.xcassets */,
 				1EF7FFD12A3DF7FD00EA792D /* Preview Content */,
 				1EF7FFF52A3DF93000EA792D /* AppViewModel.swift */,

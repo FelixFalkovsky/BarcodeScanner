@@ -55,7 +55,7 @@ extension ContentView {
         )
         .background { Color.gray.opacity(0.3) }
         .ignoresSafeArea()
-        .id(vm.dataScannerViewID)
+        .id(vm.dataScannerViewId)
         .sheet(isPresented: .constant(true)) {
             containerView
                 .padding()
