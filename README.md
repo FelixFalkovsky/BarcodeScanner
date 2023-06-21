@@ -1,6 +1,6 @@
 # BarcodeScanner
 BarcodeScanner 
-# Live Barcode aText Scanner iOS SwiftUI App with VisionKit
+# Barcode Scanner and Text Scanner iOS SwiftUI App with VisionKit
 
 ![Alt text](./barcode.png "Live Barcode & Text Scanner iOS SwiftUI App with VisionKit")
 
