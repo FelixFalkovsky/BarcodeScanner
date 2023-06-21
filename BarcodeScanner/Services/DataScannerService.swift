@@ -1,8 +1,8 @@
 //
-//  AppViewModel.swift
+//  DataScannerService.swift
 //  BarcodeScanner
 //
-//  Created by Felix Falkovsky on 17.06.2023.
+//  Created by Felix Falkovsky on 18.06.2023.
 //
 
 import Foundation
@@ -10,26 +10,23 @@ import SwiftUI
 import AVKit
 import VisionKit
 
-enum DataScannerAccessStatusType {
-    case notDetermined
-    case cameraAccessNotGranted
-    case cameraNotAvailable
-    case scannerAvailable
-    case scannerNotAvailable
-}
-
 @MainActor
-final class AppViewModel: ObservableObject {
-
-    @Published var dataScannerAcessedStatus: DataScannerAccessStatusType = .notDetermined
-
-
-    private var isScannerAvailable: Bool {
+class DataScannerService {
+    
+    var dataScannerAcessedStatus: DataScannerAccessStatusType?
+    
+    var isScannerAvailable: Bool {
         DataScannerViewController.isAvailable && DataScannerViewController.isSupported
     }
-
+    
+    var isStartScanning: Bool {
+        return false
+    }
+    
     func requestDataScannerAccessStatus() async {
-        guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
+        guard
+            UIImagePickerController.isSourceTypeAvailable(.camera)
+        else {
             dataScannerAcessedStatus = .cameraNotAvailable
             return
         }
@@ -49,5 +46,4 @@ final class AppViewModel: ObservableObject {
         default: break
         }
     }
-
 }
