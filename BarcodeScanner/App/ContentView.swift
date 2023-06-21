@@ -11,6 +11,7 @@ import VisionKit
 struct ContentView: View {
     
     @StateObject var vm: AppViewModel
+    @State private var showScannerSheet: Bool = false
     
     private let textContentType: [
         (title: String, textContentType: DataScannerViewController.TextContentType?)
@@ -34,7 +35,8 @@ struct ContentView: View {
         case .cameraAccessNotGranted:
             Text("Place provide access to yhe camera in settings")
         case .notDetermined:
-            mainView // Test UI
+            // Test UI
+            //mainView
             Text("Request camera access")
         }
     }
@@ -75,11 +77,6 @@ extension ContentView {
         }
         .onChange(of: vm.recognizesMultipleItems) { _ in
             vm.recognizedItems = []
-        }
-        .onAppear {
-            Task {
-                await vm.scannerAccessStatusService()
-            }
         }
     }
     
@@ -142,20 +139,20 @@ extension ContentView {
                         }
                     }
                 })
-                frame(width: 400)
             }
-            
-            Button("Start Scann") {
+            Button {
                 vm.startScanning.toggle()
+            } label: {
+                HStack {
+                    Text("Start Scann")
+                        .font(.headline)
+                        .foregroundColor(Color.white)
+                }
+                .frame(width: 380, height: 40)
+                .background(Color.blue)
+                .cornerRadius(25)
             }
-            .font(.headline)
-            .foregroundColor(Color.white)
-            .frame(width: 380, height: 40)
-            .background(Color.blue)
-            .cornerRadius(25)
-            .clipped()
-            .allowsHitTesting(true)
         }
     }
-    
+
 }
