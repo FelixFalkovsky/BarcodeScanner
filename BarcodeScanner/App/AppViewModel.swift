@@ -28,15 +28,17 @@ protocol ScanOptionsProtocol: AnyObject {
 
 @MainActor
 final class AppViewModel: ObservableObject {
-
+    
     @Published var dataScannerAcessedStatus: DataScannerAccessStatusType = .notDetermined
     @Published var recognizedItems: [RecognizedItem] = []
     @Published var scanType: ScanType = .barcode
     @Published var textContentType: DataScannerViewController.TextContentType?
     @Published var recognizesMultipleItems = true
+    @Published var isHiddenProgressView = false
+    @Published var startScanning: Bool = false
     
-
     private var dataScannerService = DataScannerService()
+    private var dataScannerView: DataScannerView?
     private var isScannerAvailable: Bool?
     
     var recognizedDataType: DataScannerViewController.RecognizedDataType {
@@ -44,14 +46,14 @@ final class AppViewModel: ObservableObject {
     }
     
     var dataScannerViewId: Int {
-      var hasher = Hasher()
-      hasher.combine(scanType)
-      hasher.combine(recognizesMultipleItems)
-      if let textContentType {
-          hasher.combine(textContentType)
-      }
-      return hasher.finalize()
-  }
+        var hasher = Hasher()
+        hasher.combine(scanType)
+        hasher.combine(recognizesMultipleItems)
+        if let textContentType {
+            hasher.combine(textContentType)
+        }
+        return hasher.finalize()
+    }
     
     var headerText: String {
         if recognizedItems.isEmpty {
@@ -60,11 +62,11 @@ final class AppViewModel: ObservableObject {
             return "Recognized \(recognizedItems.count) item(s)"
         }
     }
-
+    
     func scannerAccessStatusService() async {
         await dataScannerService.requestDataScannerAccessStatus()
         isScannerAvailable = dataScannerService.isScannerAvailable
         dataScannerAcessedStatus = dataScannerService.dataScannerAcessedStatus ?? .notDetermined
     }
-
+    
 }

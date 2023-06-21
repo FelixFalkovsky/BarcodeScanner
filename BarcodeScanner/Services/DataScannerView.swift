@@ -12,6 +12,7 @@ import VisionKit
 struct DataScannerView: UIViewControllerRepresentable {
    
     @Binding var recognizedItems: [RecognizedItem]
+    @Binding var isScanning: Bool
     
     let recognizedDataType: DataScannerViewController.RecognizedDataType
     let recognizesMultipleItems: Bool
@@ -29,7 +30,11 @@ struct DataScannerView: UIViewControllerRepresentable {
     
     func updateUIViewController(_ uiViewController: DataScannerViewController, context: Context) {
         uiViewController.delegate = context.coordinator
-        try? uiViewController.startScanning()
+        if isScanning {
+            try? uiViewController.startScanning()
+        } else {
+            uiViewController.stopScanning()
+        }
     }
     
     func makeCoordinator() -> Coordinator {

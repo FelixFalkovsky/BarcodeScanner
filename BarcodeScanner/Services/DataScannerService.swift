@@ -19,6 +19,10 @@ class DataScannerService {
         DataScannerViewController.isAvailable && DataScannerViewController.isSupported
     }
     
+    var isStartScanning: Bool {
+        return false
+    }
+    
     func requestDataScannerAccessStatus() async {
         guard
             UIImagePickerController.isSourceTypeAvailable(.camera)

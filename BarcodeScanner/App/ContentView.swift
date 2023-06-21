@@ -10,7 +10,7 @@ import VisionKit
 
 struct ContentView: View {
     
-    @EnvironmentObject var vm: AppViewModel
+    @StateObject var vm: AppViewModel
     
     private let textContentType: [
         (title: String, textContentType: DataScannerViewController.TextContentType?)
@@ -34,6 +34,7 @@ struct ContentView: View {
         case .cameraAccessNotGranted:
             Text("Place provide access to yhe camera in settings")
         case .notDetermined:
+            mainView // Test UI
             Text("Request camera access")
         }
     }
@@ -41,7 +42,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(vm: AppViewModel())
     }
 }
 
@@ -50,6 +51,7 @@ extension ContentView {
     private var mainView: some View {
         DataScannerView(
             recognizedItems: $vm.recognizedItems,
+            isScanning: $vm.startScanning,
             recognizedDataType: vm.recognizedDataType,
             recognizesMultipleItems: vm.recognizesMultipleItems
         )
@@ -60,7 +62,7 @@ extension ContentView {
             containerView
                 .padding()
                 .background(.ultraThinMaterial)
-                .presentationDetents([.medium, .fraction(0.25)])
+                .presentationDetents([.medium, .fraction(0.35)])
                 .presentationDragIndicator(.visible)
                 .interactiveDismissDisabled()
                 .clearModalBackground()
@@ -90,10 +92,14 @@ extension ContentView {
                     Text("Text")
                         .tag(ScanType.text)
                 }
+                .font(.headline)
+                .fontWeight(.medium)
                 .pickerStyle(.segmented)
             }
             Toggle(isOn: $vm.recognizesMultipleItems) {
                 Text("Scan multiple")
+                    .font(.headline)
+                    .fontWeight(.medium)
             }
             
             if vm.scanType == .text {
@@ -104,10 +110,14 @@ extension ContentView {
                     }
                 }
                 .pickerStyle(.segmented)
+                .padding()
             }
-            Text(vm.headerText)
-                .padding(.top)
-                .padding(.horizontal)
+            HStack(alignment: .center, spacing: 10) {
+                Text(vm.headerText)
+                ProgressView()
+                    .isHidden(!vm.recognizedItems.isEmpty)
+                    .progressViewStyle(.circular)
+            }
         }
         .padding()
     }
@@ -115,8 +125,12 @@ extension ContentView {
     private var containerView: some View {
         VStack {
             headerView
+                .font(.headline)
+                .fontWeight(.medium)
+                .padding(.top)
+            
             ScrollView {
-                LazyVStack(alignment: .leading, content: {
+                VStack(alignment: .leading, content: {
                     ForEach(vm.recognizedItems) { item in
                         switch item {
                         case .barcode(let barcode):
@@ -128,7 +142,20 @@ extension ContentView {
                         }
                     }
                 })
+                frame(width: 400)
             }
+            
+            Button("Start Scann") {
+                vm.startScanning.toggle()
+            }
+            .font(.headline)
+            .foregroundColor(Color.white)
+            .frame(width: 380, height: 40)
+            .background(Color.blue)
+            .cornerRadius(25)
+            .clipped()
+            .allowsHitTesting(true)
         }
     }
+    
 }
